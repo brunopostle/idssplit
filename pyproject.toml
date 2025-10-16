@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "idssplit"
+version = "0.1.0"
+description = "Split an IDS XML file into multiple files, each containing a single specification block"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "GPL-3.0-or-later"
+authors = [
+    {name = "Bruno Postle"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "ifctester",
+]
+
+[tool.setuptools]
+py-modules = ["idssplit"]
+
+[project.scripts]
+idssplit = "idssplit:main"
+
+[project.urls]
+Homepage = "https://github.com/brunopostle/idssplit"
+Repository = "https://github.com/brunopostle/idssplit.git"
