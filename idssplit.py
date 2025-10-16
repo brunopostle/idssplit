@@ -21,6 +21,9 @@ def split_ids(input_path, output_dir):
     total = len(ids.specifications)
     print(f"Found {total} <specification> block(s).")
 
+    # Calculate padding width based on total number of specifications
+    pad_width = len(str(total))
+
     for idx, spec in enumerate(ids.specifications, start=1):
         new_ids = Ids(
             title=ids.info.get('title'),
@@ -35,8 +38,8 @@ def split_ids(input_path, output_dir):
 
         new_ids.specifications.append(spec)
 
-        # Use the specification name as a suffix if available
-        suffix = spec.name or f"{idx:03}"
+        # Use zero-padded index as suffix
+        suffix = f"{idx:0{pad_width}}"
         filename = Path(output_dir) / f"{Path(input_path).stem}_{suffix}.ids"
 
         new_ids.to_xml(str(filename))
