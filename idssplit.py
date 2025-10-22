@@ -10,6 +10,7 @@ Usage:
 
 import sys
 import os
+import re
 from pathlib import Path
 from ifctester.ids import Ids, open as ids_open
 
@@ -38,9 +39,17 @@ def split_ids(input_path, output_dir):
 
         new_ids.specifications.append(spec)
 
-        # Use zero-padded index as suffix
+        # Build suffix: padded index + sanitized spec name
         suffix = f"{idx:0{pad_width}}"
-        filename = Path(output_dir) / f"{Path(input_path).stem}_{suffix}.ids"
+        if spec.name:
+            # Sanitize spec.name: keep only alphanumeric, spaces, hyphens, underscores
+            sanitized_name = re.sub(r'[^a-zA-Z0-9\s_-]', '', spec.name)
+            # Collapse multiple spaces and strip leading/trailing whitespace
+            sanitized_name = re.sub(r'\s+', ' ', sanitized_name).strip()
+            if sanitized_name:
+                suffix = f"{suffix} {sanitized_name}"
+
+        filename = Path(output_dir) / f"{Path(input_path).stem} {suffix}.ids"
 
         new_ids.to_xml(str(filename))
         print(f"Wrote: {filename.name}")
